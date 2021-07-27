@@ -1,15 +1,30 @@
-<!doctype html>
-<head>
-  <title>Connect 4</title>
-  <link href="connect4.css" rel="stylesheet">
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="style.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale-1.0">
+      <title>MEME MAKER</title>
+  </head>  
+  <body>
+    <div id="headers">
+     <h1>MAKE MEME</h1>
+     <h2>Time to Create Some Dope Memes</h2>
+    </div>
 
-<div id="game">
-  <table id="board"></table>
-</div>
+    <div>
+        <form type="submit" name = "form" id="form">
+           <label type="url">Image URL: </label>
+           <input type="url" name="url">
 
-<script src="connect4.js"></script>
+           <label type="text">Top</label>
 
-</body>
+        </form>
+
+    </div>
+  <script src="app.js"></script>
+  </body>
 </html>

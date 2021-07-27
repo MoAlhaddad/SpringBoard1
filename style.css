@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+    background-color: gray;
+    font-family:'Fjalla One', sans-serif;
+    padding: 50px;
+    margin: 50px white;
+    border: solid black;
+
+}
+
+h2 {
+    text-align: center;
+}
