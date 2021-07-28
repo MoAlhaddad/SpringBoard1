@@ -1,286 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hack or Snooze</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" type="text/css">
-</head>
-
-<body>
-    <div class="container">
-
-
-        <div class="container shadow-sm p-2 h2" id="navBar">
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars" style="font-size: 27px;"></i>
-            </button>
-
-            <i class="fas fa-angle-right"></i> 
-            <b>All Articles</b>
-
-            <div class="navbar-collapse collapse menu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><div class="menu_item" id="navItem_all" data-toggle="collapse" data-target=".navbar-collapse.show">All Articles</div></li>
-                    <li class="nav-item"><div class="menu_item" id="navItem_users" data-toggle="collapse" data-target=".navbar-collapse.show">Your Articles</div></li>
-                    <li class="nav-item"><div class="menu_item" id="navItem_favorites" data-toggle="collapse" data-target=".navbar-collapse.show">Favorites</div></li>
-                    <li class="nav-item"><div class="menu_item" id="navItem_submitArticle" data-toggle="collapse" data-target=".navbar-collapse.show">Submit New Article</div></li>
-                    <li class="nav-item"><div class="menu_item" id="navItem_userProfile" data-toggle="collapse" data-target=".navbar-collapse.show">User Profile</div></li>
-                </ul>
-            </div>
-
-        </div>
-
-
-        <div class="row flex-nowrap">
-
-
-            <div class="col col-lg-9" id="mainContent">
-
-                <div class="d-none" id="articles">
-                </div>
-
-
-                <div class="spinner-border d-none" role="status" style="margin: 20px auto; display: flex;"></div>
-
-
-                <div class="container shadow-sm d-none" id="page_submitArticle">
-                    <div class="row page_content">
-                        <div class="col col-2 page_label">
-                            URL :<br />
-                            Title :<br />
-                            Author :<br />
-                        </div>
-                        <div class="col shadow-sm page_form">
-                            <form>
-                                <input type="url" class="form-control page_input" id="url" placeholder="Enter the Article URL" />
-                                <input type="text" class="form-control page_input" id="title" placeholder="Enter the Article Title" />
-                                <input type="text" class="form-control page_input" id="author" placeholder="Enter the Article Author(s)" />
-                                <input type="submit" class="btn btn-light page_button" value="Submit New Article">
-                            </form>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container shadow-sm d-none" id="page_editArticle">
-                    <div class="row page_content">
-                        <div class="col col-2 page_label">
-                            ID :<br />
-                            URL :<br />
-                            Title :<br />
-                            Author :<br />
-                        </div>
-                        <div class="col shadow-sm page_form">
-                            <form>
-                                <input type="text" class="form-control page_input" id="id" placeholder="Enter the Article URL" readonly />
-                                <input type="url" class="form-control page_input" id="url" placeholder="Enter the Article URL" />
-                                <input type="text" class="form-control page_input" id="title" placeholder="Enter the Article Title" />
-                                <input type="text" class="form-control page_input" id="author" placeholder="Enter the Article Author(s)" />
-                                <div class="row">
-                                    <input type="submit" class="btn btn-light page_button" value="Edit Article">
-                                    <button type="button" class="btn btn-outline-danger page_button">Delete Article</button>
-                                </div>
-                            </form>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container shadow-sm d-none" id="page_login">
-                    <div class="row page_content">
-                        <div class="col col-2 page_label">
-                            Username :<br />
-                            Password :<br />
-                        </div>
-                        <div class="col shadow-sm page_form">
-                            <form>
-                                <input type="text" class="form-control page_input" id="username" placeholder="Enter your username" />
-                                <input type="password" class="form-control page_input" id="password" placeholder="Enter your password" />
-                                <div class="row">
-                                    <input type="submit" class="btn btn-light page_button" value="Log In">
-                                    <button type="button" class="btn btn-outline-dark page_button">Create Account</button>
-                                </div>
-                            </form>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container shadow-sm d-none" id="page_createAccount">
-                    <div class="row page_content">
-                        <div class="col col-2 page_label">
-                            Name :<br />
-                            Username :<br />
-                            Password :<br />
-                        </div>
-                        <div class="col shadow-sm page_form">
-                            <form>
-                                <input type="text" class="form-control page_input" id="name" placeholder="Enter your name" />
-                                <input type="text" class="form-control page_input" id="username" placeholder="Enter your desired username" />
-                                <input type="password" class="form-control page_input" id="password" placeholder="Enter your desired password" />
-                                <input type="submit" class="btn btn-light page_button" value="Create Account" />
-                            </form>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container shadow-sm d-none" id="page_editAccount">
-                    <div class="row page_content">
-                        <div class="col col-3 page_label">
-                            Username :<br />
-                            Name :<br />
-                            Old Password :<br />
-                            New Password :<br />
-                        </div>
-                        <div class="col shadow-sm page_form">
-                            <form>
-                                <input type="text" class="form-control page_input" id="username" readonly />
-                                <input type="text" class="form-control page_input" id="name" placeholder="Enter your new name" />
-                                <input type="password" class="form-control page_input" id="oldPassword" placeholder="Enter your old password" />
-                                <input type="password" class="form-control page_input" id="newPassword" placeholder="Enter your new password (Optional)" />
-                                <div class="row">
-                                    <input type="submit" class="btn btn-light page_button" value="Update Account">
-                                    <button type="button" class="btn btn-outline-danger page_button">Delete Account</button>
-                                </div>
-                            </form>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container shadow-sm d-none" id="page_userProfile">
-                    <div class="row page_content">
-                        <div class="col col-3 page_label">
-                            Username :<br />
-                            Name :<br />
-                            Date Joined :<br />
-                            # of Posts :<br />
-                            # of Favorites :<br />
-                        </div>
-                        <div class="col shadow-sm page_info">
-                            <text></text><br />
-                            <text></text><br />
-                            <text></text><br />
-                            <text></text><br />
-                            <text></text><br />
-                            <div class="row">
-                                <button type="button" class="btn btn-light page_button">Log Out</button>
-                                <button type="button" class="btn btn-outline-dark page_button">Edit Account</button>
-                            </div>
-                            <center><text class="page_errorMessage"></text></center>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col d-none d-lg-block">
-
-                <div class="container shadow-sm d-none" id="panel_userProfile">
-                    <div class="row panel_header"><p class="panel_title">Log In</p><div class="spinner-grow d-none" role="status"></div></div>
-                    <div class="row panel_content">
-                        <div class="col col-4 panel_label">
-                            Username :<br />
-                            Password :<br />
-                        </div>
-                        <div class="col panel_form">
-                            <form>
-                                <input type="text" class="form-control panel_input" id="username" placeholder="Enter your username" />
-                                <input type="password" class="form-control panel_input" id="password" placeholder="Enter your password" />
-                                <input type="submit" class="d-none">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row panel_content"><text class="panel_errorMessage"></text></div>
-                    <div class="row panel_footer">
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: left;">Create Account</button></div>
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: right;">Log In</button></div>
-                    </div>
-                </div>
-                <div class="spacing"></div>
-
-                <div class="container shadow-sm d-none" id="panel_submitArticle">
-                    <div class="row panel_header"><p class="panel_title">Submit Article</p><div class="spinner-grow d-none" role="status"></div></div>
-                    <div class="row panel_content">
-                        <div class="col col-3 panel_label">
-                            URL :<br />
-                            Title :<br />
-                            Author :<br />
-                        </div>
-                        <div class="col panel_form">
-                            <form>
-                                <input type="url" class="form-control panel_input" id="url" placeholder="Enter the URL" />
-                                <input type="text" class="form-control panel_input" id="title" placeholder="Enter the Title" />
-                                <input type="text" class="form-control panel_input" id="author" placeholder="Enter the Author(s)" />
-                                <input type="submit" class="d-none">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row panel_content"><text class="panel_errorMessage"></text></div>
-                    <div class="row panel_footer">
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: left;">Expand</button></div>
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: right;">Submit</button></div>
-                    </div>
-                </div>
-                <div class="spacing"></div>
-
-                <div class="container shadow-sm d-none" id="panel_userArticles">
-                    <div class="row panel_header"><p class="panel_title">Your Articles</p><div class="spinner-grow d-none" role="status"></div></div>
-                    <div class="row panel_content">
-                        <div class="col" style="padding: 0px 4px 0px 4px">
-                            <div class="spacing"></div>
-                            <div id="articles">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row panel_footer">
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: left;">Show All</button></div>
-                        <div class="col d-none" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: right;"></button></div>
-                    </div>
-                </div>
-                <div class="spacing"></div>
-
-                <div class="container shadow-sm d-none" id="panel_randomArticle">
-                    <div class="row panel_header"><p class="panel_title">Random Article</p><div class="spinner-grow d-none" role="status"></div></div>
-                    <div class="row panel_content">
-                        <div class="col" style="padding: 0px 4px 0px 4px">
-                            <div class="spacing"></div>
-                            <div id="articles">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row panel_footer">
-                        <div class="col d-none" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: left;"></button></div>
-                        <div class="col" style="padding: 0px 2px;"><button type="button" class="btn btn-sm btn-light panel_button" style="float: right;">New Random Article</button></div>
-                    </div>
-                </div>
-                <div class="spacing"></div>
-
-            </div>
-
-
-        </div>
-        <div class="spacing p-5"></div>
+<div class="app">
+  
+  
+    <header class="top-header">
+      <h1>Trivia Game Show</h1>
+      <p class="score">Score <span class="score-count"></span></p>
+    </header>
+    
+    <!-- container for board -->
+    <div class="board">
+      <!-- categories get injected here -->
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="api.js"></script>
-    <script src="data.js"></script>
-    <script src="app.js"></script>
-</body>
-
-</html>
+    
+    <!-- invisible container for the card prompt -->
+    <div class="card-model">
+      <div class="card-model-inner">
+        <h2 class="clue-text"><!-- clue gets injected here --></h2>
+        <form autocomplete="off">
+          <input name="user-anwser" type="text" />
+          <button type="submit">Anwser</button>
+        </form>
+        <div class="result">
+          <p class="result_success">CORRECT</p>
+          <p class="result_fail">INCORRECT</p>
+          <p class="result_correct-answer">
+        The correct answer is <span class="result_correct-answer-text"><!--answer gets injected here--></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+          
