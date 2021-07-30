@@ -1,64 +1,80 @@
-from flask import Flask, request
-from operations import add, sub, mult, div
+from flask import Flask, request, render_template, redirect, flash, session
+from flask_debugtoolbar import DebugToolbarExtension
+from surveys import satisfaction_survey as survey
+
+# key names will use to store some things in the session;
+# put here as constants so we're guaranteed to be consistent in
+# our spelling of these
+RESPONSES_KEY = "responses"
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "never-tell!"
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-@app.route("/add")
-def do_add():
-    """Add a and b parameters."""
+debug = DebugToolbarExtension(app)
 
-    a = int(request.args.get("a"))
-    b = int(request.args.get("b"))
-    result = add(a, b)
 
-    return str(result)
+@app.route("/")
+def show_survey_start():
+    """Select a survey."""
 
-@app.route("/sub")
-def do_sub():
-    """Subtract and b parameters."""
+    return render_template("survey_start.html", survey=survey)
 
-    a = int(request.args.get("a"))
-    b = int(request.args.get("b"))
-    result = sub(a, b)
 
-    return str(result)
+@app.route("/begin", methods=["POST"])
+def start_survey():
+    """Clear the session of responses."""
 
-@app.route("/mult")
-def do_mult():
-    """Multiply a and b parameters."""
+    session[RESPONSES_KEY] = []
 
-    a = int(request.args.get("a"))
-    b = int(request.args.get("b"))
-    result = mult(a, b)
+    return redirect("/questions/0")
 
-    return str(result)
 
-@app.route("/div")
-def do_div():
-    """Divide a and b parameters."""
+@app.route("/answer", methods=["POST"])
+def handle_question():
+    """Save response and redirect to next question."""
 
-    a = int(request.args.get("a"))
-    b = int(request.args.get("b"))
-    result = div(a, b)
+    # get the response choice
+    choice = request.form['answer']
 
-    return str(result)
+    # add this response to the session
+    responses = session[RESPONSES_KEY]
+    responses.append(choice)
+    session[RESPONSES_KEY] = responses
 
-### PART TWO
+    if (len(responses) == len(survey.questions)):
+        # They've answered all the questions! Thank them.
+        return redirect("/complete")
 
-operators = {
-        "add": add,
-        "sub": sub,
-        "mult": mult,
-        "div": div,
-        }
+    else:
+        return redirect(f"/questions/{len(responses)}")
 
-@app.route("/math/<oper>")
-def do_math(oper):
-    """Do math on a and b."""
 
-    a = int(request.args.get("a"))
-    b = int(request.args.get("b"))
-    result = operators[oper](a, b)
+@app.route("/questions/<int:qid>")
+def show_question(qid):
+    """Display current question."""
+    responses = session.get(RESPONSES_KEY)
 
-    return str(result)
+    if (responses is None):
+        # trying to access question page too soon
+        return redirect("/")
 
+    if (len(responses) == len(survey.questions)):
+        # They've answered all the questions! Thank them.
+        return redirect("/complete")
+
+    if (len(responses) != qid):
+        # Trying to access questions out of order.
+        flash(f"Invalid question id: {qid}.")
+        return redirect(f"/questions/{len(responses)}")
+
+    question = survey.questions[qid]
+    return render_template(
+        "question.html", question_num=qid, question=question)
+
+
+@app.route("/complete")
+def complete():
+    """Survey complete. Show completion page."""
+
+    return render_template("completion.html")
